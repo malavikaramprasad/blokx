@@ -1,8 +1,35 @@
 <html>
+<canvas id="game" width='800' height='600'> </canvas>
 	<script type="text/javascript">
+		let canvas;
+		let canvasContext;
+		let ballX = 50;
+		let ballY = 50;
 		window.onload = function () {
-			console.log('Hello There!')
+			console.log('Hello There!');
+			canvas = document.getElementById('game');
+			canvasContext = canvas.getContext('2d');
+			let fps = 20;
+			setInterval(() => { drawEverything(); moveEverything()} , 1000/fps);
 		}
+
+		function moveEverything(){
+			ballX += 20
+
+		}
+
+		function drawEverything(){
+			canvasContext.fillStyle = 'black';
+			canvasContext.fillRect(20,30,canvas.width,canvas.height);
+			canvasContext.fillStyle = 'white';
+			canvasContext.fillRect(50, 250, 10, 100);
+			// canvasContext.fillStyle = 'red';
+			// canvasContext.fillRect(ballX, 80, 10, 10);
+			canvasContext.fillStyle = 'white';
+			canvasContext.fillRect(750, 295, 10, 100);
+		}
+
+
 	</script>
 
 </html>
