@@ -4,32 +4,41 @@
 		let canvas;
 		let canvasContext;
 		let ballX = 50;
+		let ballSpeedX = 25;
 		let ballY = 50;
 		window.onload = function () {
-			console.log('Hello There!');
 			canvas = document.getElementById('game');
 			canvasContext = canvas.getContext('2d');
-			let fps = 20;
+			let fps = 30;
 			setInterval(() => { drawEverything(); moveEverything()} , 1000/fps);
 		}
 
 		function moveEverything(){
-			ballX += 20
-
+			ballX += ballSpeedX
+			if(ballX > canvas.width)
+				ballSpeedX = -ballSpeedX
+			if(ballX < 0)
+				ballSpeedX = -ballSpeedX
 		}
 
 		function drawEverything(){
-			canvasContext.fillStyle = 'black';
-			canvasContext.fillRect(20,30,canvas.width,canvas.height);
-			canvasContext.fillStyle = 'white';
-			canvasContext.fillRect(50, 250, 10, 100);
-			// canvasContext.fillStyle = 'red';
-			// canvasContext.fillRect(ballX, 80, 10, 10);
-			canvasContext.fillStyle = 'white';
-			canvasContext.fillRect(750, 295, 10, 100);
+			drawRect('black', 0, 0, canvas.width, canvas.height);
+			drawRect('white', 30, 250, 10, 100);
+			drawCircle('white', ballX, 150, 10);
+			drawRect('white', 770, 250, 10, 100);
 		}
 
+		function drawRect(color, leftX, topY, width, height){
+			canvasContext.fillStyle = color;
+			canvasContext.fillRect(leftX,topY,width,height);
+		}
 
+		function drawCircle(color, radiusX, radiusY, radius){
+			canvasContext.fillStyle = color;
+			canvasContext.beginPath();
+			canvasContext.arc(radiusX, radiusY, radius, 0, Math.PI * 2, true);
+			canvasContext.fill();
+		}
 	</script>
 
 </html>
