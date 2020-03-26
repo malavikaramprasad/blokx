@@ -9,7 +9,9 @@
 		let ballSpeedY = 4;
 		let paddle1Y = 250;
 		let paddle1X = 30;
-		const PADDLE_HEIGHT = 100
+		let paddle2Y = 250;
+		const PADDLE_HEIGHT = 100;
+		const PADDLE_WIDTH = 10;
 
 
 		window.onload = function () {
@@ -29,10 +31,18 @@
 			ballX += ballSpeedX;
 			ballY += ballSpeedY;
 			//Let Ball stay inside the canvas horizontally
-			if(ballX > canvas.width)
+			if(ballX > canvas.width-PADDLE_WIDTH){
+				paddle2Y = ballY - PADDLE_HEIGHT/2;
 				ballSpeedX = -ballSpeedX;
-			if(ballX < 0)
-				ballSpeedX = -ballSpeedX;
+			}
+			if(ballX < PADDLE_WIDTH){
+				if(ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT){
+					ballSpeedX = -ballSpeedX;
+				}
+				else{
+					resetBall();
+				}
+			}
 
 			//Let Ball stay inside the canvas vertically
 			if(ballY > canvas.height)
@@ -45,10 +55,10 @@
 		function drawEverything(){
 			drawRect('black', 0, 0, canvas.width, canvas.height);
 			//Player 1
-			drawRect('white', 0, paddle1Y, 10, PADDLE_HEIGHT);
+			drawRect('white', 0, paddle1Y, PADDLE_WIDTH, PADDLE_HEIGHT);
 			drawCircle('white', ballX, ballY, 10);
 			//Computer
-			drawRect('white', 770, 250, 10, 100);
+			drawRect('white', canvas.width-PADDLE_WIDTH, paddle2Y, PADDLE_WIDTH, PADDLE_HEIGHT);
 		}
 
 		function drawRect(color, leftX, topY, width, height){
@@ -72,6 +82,12 @@
 				x: mouseX, y:mouseY
 			}
 
+		}
+
+		function resetBall(){
+			ballSpeedX = -ballSpeedX;
+			ballX = canvas.width/2;
+			ballY = canvas.height/2;
 		}
 	</script>
 
